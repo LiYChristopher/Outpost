@@ -1,4 +1,4 @@
-## Flask Blog Engine
+## Outpost - A Minimal Flask Blog Engine
 This is a simple blog engine, cobbled together using Flask and various extensions with a MongoDB backend. It includes
 a basic front-end view of posts, filterable by either category or tag, as well as text search.
 
@@ -10,7 +10,9 @@ views are sortable by various database fields.
 For those who are newer to Flask, this might be useful to see how Blueprints work, how various
 extensions fit into the overall application, and how a MongoDB driven Flask App looks like in general.
 
-Similar code happens to power my own hosted blog.
+Similar code happens to power my own hosted blog. I called this Outpost because while quite simple
+at its core, supplies you with enough as a standalone blog engine to let you publish and share content
+with the world.
 
 ## Extensions Used
 
