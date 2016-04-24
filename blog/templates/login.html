@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+	<div class="login container-fluid">
+		<div class="container-narrow">
+		<div class="panel panel-info">
+			<div class='panel-heading'>
+				<p class="panel-title">Sign in</p>
+			</div>
+			<div>
+				<div class='text-center panel-body'>
+					<div class='center-block login-inner'>
+						<form action="{{ url_for('posts.login') }}" method="post" name="login">
+							{{ form.hidden_tag() }}
+							<!-- Block Flash -->
+							<div>
+							{% block flash %} 
+								{{ super() }}
+							{% endblock %}
+							</div>
+							<div><p> Username </p></div>
+							{{ form.email(size=50, class_='form-control') }} <br>
+							{% for error in form.email.errors %}
+							    <span style='color:red'>{{ error }}</span>
+							{% endfor %} <br>
+							<div><p> Password </p></div>
+							{{ form.password(size=50, class_='form-control') }} <br>
+							{% for error in form.password.errors %}
+							    <span style='color:red'>{{ error }}</span>
+							{% endfor %} <br>		
+							<div>
+								<p> {{ form.remember_me }} Remember me </p>
+							</div>
+							<p><input class="btn btn-success" type="Submit" value="Login"></p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>	
+		</div>
+	</div>
+
+<!-- Footer-->
+{% block footer %} {{ super() }} {% endblock %}
+</body>
+{% endblock %}

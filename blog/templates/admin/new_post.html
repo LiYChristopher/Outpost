@@ -1,0 +1,135 @@
+{% extends "/admin/base.html" %}
+
+{% block head %}
+	{{ super() }}
+	<!-- Summernote -->
+	<link rel='stylesheet' type="text/css" href='/static/summernote/summernote.css'>
+	<script src="/static/summernote/summernote.min.js"></script>
+	<script src="/static/summernote/plugin/highlight/summernote-ext-highlight.js"></script>
+	<title> Blog - New Post </title>
+{% endblock %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h3> New Post </h3>
+	</div>
+	<!-- Navbar -->
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<a class="btn btn-default" href="{{ url_for('posts.all_posts', page=1) }}"><span class='glyphicon glyphicon-th-list'></span></a>
+		</div>	
+	</div><br>
+	<!-- Flash messages -->
+	{% block flash %}
+		{{ super() }}
+	{% endblock %}
+
+<!-- Editor Panel -->
+<div class='row'>
+<!-- File -->
+<div class='col-sm-4'>
+	<strong><p>Upload New Media</p></strong>
+	<div class='row'>
+		<div class='panel-body col-sm-12'>
+	    
+	    <form action="{{ url_for('posts.upload', redirect_endpoint=request.endpoint, slug=slug) }}" method='post' enctype=multipart/form-data>
+  			<input type='file' name='index_background'>
+
+        	<input class='btn btn-info btn-xs' style='float:right' type='submit' value='Upload'>
+	    </form>
+		</div>
+	</div>		
+</div>	
+</div>
+<div class='row'>
+<form action="{{ url_for('posts.new_post') }}" method="post">
+	{{ form.csrf_token }}
+	<fieldset>			
+	<!-- Title -->
+	<div class='col-sm-12'>
+		{{ form.title.label }}<br>
+		{{ form.title(class_='form-control', placeholder='Insert Title Here') }}<br>
+		{{ form.title.error}}		
+	</div>
+</div>
+<div class='row'>
+	<!-- Author/Index Background-->
+	<div class='col-sm-5'>
+		<!-- Author -->
+		{{ form.author.label }}<br>
+		{{ form.author(class_='form-control btn btn-default dropdown-toggle') }}<br>
+		<!-- Index Background -->
+		{{ form.index_background.label }}
+		{{ form.index_background(class_='form-control') }}<br>			
+	</div>
+	<!-- Category/Tags/(Published/Submit) -->
+	<div class='col-sm-7'>
+		<!-- Categories -->
+		{{ form.category.label }}<br>
+		{{ form.category(class_='form-control btn btn-default dropdown-toggle') }}<br>
+		<!-- Tags -->
+		{{ form.tags.label }}<br>
+		{% if form.tags %}
+			<div class="form-field">
+				<input id='new_tags' class='form-control' name='new_tags' type='text' placeholder='Separate with punctuation' value='{{ form.tags.object_data | join(',') }}'>
+				</input>
+			</div>
+		{% else %}
+			<div class="form-field">
+				<input id='new_tags' class='form-control' name='new_tags' type='text' placeholder='Separate with punctuation'>
+				</input>
+			</div>
+		{% endif %}
+		<div class='row'>
+			<div class='col-sm-6'>
+				<div class='pull-left'>
+				<!-- Published -->
+				{{ form.published.label }}
+				{{ form.published }}<br>
+				</div>
+			</div>
+			<div class='col-sm-6'>
+				<!-- Submit Button -->
+				<input class='pull-right btn btn-success btn-md' type="submit" value="Submit">
+			</div>
+		</div>		
+	</div>		
+</div>
+<div class='row'>
+	<!-- Summernote Editor for Content-->
+	<div class='col-sm-12'>
+		<div class="form-label">{{ form.content.label }}</div>
+		<div class="form-field">{{ form.content(id='summernote', cols=60, rows=15) }}</div>		
+	</div>
+	</fieldset>
+</form>
+</div>
+
+<!-- Summernote config -->
+{% block scripts %}
+	<script>
+      	$(document).ready(function() {
+         	$('#summernote').summernote({
+		    // close prettify Html
+		    height: 310,
+		    prettifyHtml:false,
+		    toolbar:[
+		    	['misc', ['fullscreen', 'codeview']],
+		    	['style', ['bold', 'italic', 'underline', 'clear']],
+		    	['para', ['style', 'ul', 'ol', 'paragraph']],
+		    	['font', ['strikethrough', 'superscript', 'subscript', 'clear']],
+		        ['color', ['color']],
+		        ['table', ['table']],
+		        ['insert', ['link', 'picture']],
+		        ['height', ['height']],
+		        // Add highlight plugin
+		        ['highlight', ['highlight']],
+		    ]
+			});
+
+			$('#summernote').summernote('lineHeight', 2)
+      	});
+    </script>
+{% endblock %}
+{% endblock %}

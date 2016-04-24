@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+
+{% block head %}
+<head>
+	<!-- Latest compiled and minified JQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>		
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Font Awesome & Custom -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
+	{% block title %}{% endblock %}
+	<title> Flask Blog Engine </title>
+</head>
+{% endblock %}
+
+	<!-- Block Content -->
+	{% block content %}
+	{% block nav %}	
+		<div class="navbar-header">
+			<!-- Brand / Blog Button -->
+			<a class='blog-heading-index navbar-brand' href="{{ url_for('index', page=1) }}">
+				Blog Brand
+			</a>
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target='#bs-navbar-collapse'>
+				<span class="sr-only"> Toggle Navigation </span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+			<!-- Links from navbar -->
+			<nav class="collapse navbar-collapse" id="bs-navbar-collapse" role="navigation">	
+
+				<ul class="sansfont nav navbar-nav">
+				{% if current_user.is_authenticated %}
+					<li><a class='nav-link' href="{{ url_for('posts.logout') }}"><span class='glyphicon glyphicon-off'></span> Logout</a></li>
+					<li><a class='nav-link'href="{{ url_for('posts.admin') }}"><span class='glyphicon glyphicon-briefcase'></span> Admin</a></li>
+					<li><a class='nav-link' href="{{ url_for('posts.new_post') }}"><span class='glyphicon glyphicon-pencil'></span> New Post</a></li>
+							
+				{% endif %}
+					<li><a class='nav-link' href="#">Nav Link 1</a></li>
+					<li><a class='nav-link' href="#">Nav Link 2</a></li>
+				</ul>
+				<!-- Search bar from navbar -->
+				{% if form %}
+				<div class='form-group'>
+					<form class='navbar-form navbar-right' role='search' action="{{ url_for('index', page=1) }}" method="post">
+						{{ form.query(style='border-radius: 0', size=20, class_='form-control') }}
+					<button class='search-button btn btn-default' type='submit'><span class='fa fa-search fa-lg'></span></button>
+					</form>
+				</div>
+				{% endif%}
+			</nav>
+		</div>
+	</div>
+	{% endblock %}
+	<!-- Block Flash -->
+	{% block flash %}
+		{% with messages = get_flashed_messages() %}
+
+			{% if messages %}
+
+			{% for message in messages %}
+
+				<ul class='error'> {{ message }} </ul>
+
+			{% endfor %}
+
+			{% endif %}
+		{% endwith %}
+	{% endblock %}
+	<!-- Block Scripts -->
+	{% block scripts %}
+	{% endblock %}
+	<!-- Footer-->
+	{% block footer %}
+	<footer class="footer">
+		<div style='max-width:100%' class="container"> 
+			<div class='pull-right row'>
+				<br>
+				<div class='col-sm-12'>
+					<b><p><i>Footer content</i></p></b>
+				</div>
+			</row>
+		</div>
+	</footer>
+	{% endblock %}
+	{% endblock %}
+</html>

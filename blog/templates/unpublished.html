@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title> Chris Li's Blog </title>
+{% endblock %}
+
+{% block content %}
+
+<body>
+<!-- Navbar -->
+{% block nav %}
+	<nav class="navbar navbar-default bs-doc-nav" role="banner">
+		{{ super() }}
+	</nav>
+{% endblock %}
+
+<!-- Detail Container -->
+<div class="container-narrow">
+	<div class='container-fluid'>
+	<b><h3 class='text-center page-header blog-heading'>Post Unavailable!</h3></b>
+
+	<!-- Detail Content-->
+	<div class="article-body container-fluid">
+		<p>
+			You need to publish this post first, before it's available to the public!
+		</p>
+	<br>
+	</div>
+</div>
+</div>
+
+	
+<!-- Footer-->
+{% block footer %} {{ super() }} {% endblock %}
+</body>
+{% endblock %}

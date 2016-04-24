@@ -1,0 +1,84 @@
+{% extends "/admin/base.html" %}
+
+{% block content %}
+<title> Blog - Delete Post </title>
+
+<div class="page-header">
+	<h3>Delete Post(s)</h3>
+</div>
+<!-- Navbar -->
+<div class="btn-toolbar" role="toolbar">
+	<div class="btn-group">
+		<a class="btn btn-default" href="{{ url_for('posts.all_posts', page=1) }}"><span class='glyphicon glyphicon-th-list'></span></a>
+	</div>	
+</div><br>
+
+<!-- Table Wrapper -->
+<div class='table-wrapper container-fluid'>
+	<!-- Posts to delete -->
+	<table class="table table-striped table-sm">
+		<thead>
+			<tr>
+			<th>
+				<p> created_at </p>
+			</th>
+
+			<th>
+				<p> author </p>
+			</th>
+			<th>
+				<p> tags </p>
+			</th>
+			<th>
+				<p> slug </p>
+			</th>				
+			<th>
+				<p> content </p>
+			</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if to_delete %}
+				{% for post in to_delete %}
+					<form action="{{ url_for('posts.delete_selected') }}" method="post">
+					<tr>
+						<td>{{ post.created_at }}</td>
+						<td>{{ post.author }}</td>
+						<td>
+						{% if post.tags %}
+							
+							{% for tag in post.tags %}
+								<span class='label label-info'>{{ tag }}</span>
+							{% endfor %}
+							
+						{% endif %}
+						</td>
+						<td class='admin-post-slug'><a href="{{ url_for('detail', slug=post.slug) }}" >{{ post.slug }}</a></td>
+						<td>{{ post.content | truncate(150)}}</td>
+					</tr>
+				{% endfor %}							
+			{% else %}
+				<form action="{{ url_for('posts.delete_post', slug=post.slug) }}" method="post">
+				<tr>
+					<td>{{ post.created_at }}</td>
+					<td>{{ post.author }}</td>
+					<td>
+					{% if post.tags %}
+						
+						{% for tag in post.tags %}
+							<span class='label label-info'>{{ tag }}</span>
+						{% endfor %}
+						
+					{% endif %}
+					</td>
+					<td class='admin-post-slug'><a href="{{ url_for('detail', slug=post.slug) }}" >{{ post.slug }}</a></td>
+					<td>{{ post.content | truncate(150)}}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table><br>
+</div>
+	<!-- Delete Button -->
+	<input class='pull-right btn btn-success btn-md' type="submit" value="Confirm Delete">
+	</form>
+{% endblock %}

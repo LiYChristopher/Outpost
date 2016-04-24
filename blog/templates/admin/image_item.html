@@ -1,0 +1,27 @@
+{% extends "/admin/base.html" %}
+
+{% block content %}
+
+
+<!-- Messages -->
+{% block flash %} {{ super() }} {% endblock %}
+
+<h3 class='page-header'>Index Background Image - {{ image.file_name }}</h3>
+
+<!-- Navbar -->
+<div class="btn-toolbar" role="toolbar">
+	<div class="btn-group">
+		<a class="btn btn-default" href="{{ url_for('posts.image_gallery') }}"><span class='glyphicon glyphicon-th-list'></span></a>
+		<!-- Delete -->
+		<form action="{{ url_for('posts.delete_image_item', file_name=image.file_name) }}" method="post" name="delete">  
+			<button class='btn btn-danger btn-xs'type='submit' ><i class="glyphicon glyphicon-trash"></i></button>
+		</form>
+	</div>	
+</div><br>
+
+<div class='container-fluid'>
+	<div class='gallery-detail panel-body'>
+		<img class='gallery-img' src="/static/uploads/{{ image.file_name }}"></img>
+	</div>
+</div> <!-- end container-fluid-->
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+	{% block head %}
+	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>			
+		<!-- Extra font, font-awesome, custom stylesheet -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/admin/admin.css">
+		<meta name="viewport" content="initial-scale=1">
+		<title> Blog Admin </title>
+	</head>
+ 	{% endblock %}
+<body>
+
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li>
+            	<a href="/"><span class='glyphicon glyphicon-home'></span> Blog</a>
+            </li>
+			<li>
+				<a href="{{ url_for('posts.all_posts', sort='-created_at', page=1) }}">
+					<span class='glyphicon glyphicon-list-alt'></span> Posts
+				</a>
+			</li>
+			<li>
+				<a href="{{ url_for('posts.categories', page=1) }}">
+					<span class='glyphicon glyphicon-th-large'></span> Categories
+				</a>
+			</li>
+			<li>
+				<a href="{{ url_for('posts.image_gallery', sort='-created_at', page=1) }}">
+					<span class='glyphicon glyphicon-picture'></span> Image Gallery
+				</a>
+			</li>
+			<li>
+				<a href="/admin/logout">
+					<span class='glyphicon glyphicon-off'></span> Logout
+				</a>
+			</li>
+        </ul>
+    </div>
+    
+    <!-- Page content -->
+    <div class="page-content-wrapper">
+        <!-- Collapse Button -->
+        <div class="list-content">
+			<button class="btn btn-default" id='menu-toggle' type="button">
+				<span class='glyphicon glyphicon-menu-hamburger'></span>
+			</button>
+    		<!-- Content-->
+			{% block content %}
+				<!-- Flash Messages -->
+				{% block flash %}
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							{% for message in messages %}
+								<div class='alert alert-info' role="alert"><p>{{ message }}</p></div>
+							{% endfor %}
+						{% endif %}
+					{% endwith %}
+				{% endblock %}	
+			{% endblock %}
+        </div>
+	</div>
+
+	{% block script %}
+		<script>
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("active");
+		});
+	  	</script>	  	
+	{% endblock %}
+</body>
+</html>
